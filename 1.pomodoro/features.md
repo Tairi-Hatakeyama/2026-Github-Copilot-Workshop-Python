@@ -41,10 +41,9 @@
 
 ### 2.2 JSON API エンドポイント
 - [ ] `GET /api/config` - 設定情報の取得
-- [ ] `POST /api/config` - 設定情報の更新
-- [ ] `GET /api/stats` - 統計情報の取得
+- [ ] `PUT /api/config` - 設定情報の更新
+- [ ] `POST /api/stats/events` - タイマーイベントのロギング
 - [ ] `GET /api/stats/today` - 本日の統計
-- [ ] `POST /api/timer/event` - タイマーイベントのロギング
 
 ### 2.3 エラーハンドリング
 - [ ] バリデーションエラー処理

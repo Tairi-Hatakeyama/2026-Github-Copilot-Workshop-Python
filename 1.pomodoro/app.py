@@ -73,7 +73,15 @@ def create_app(config: dict | None = None) -> Flask:
             return jsonify({"error": f"event_type は {valid_events} のいずれかで指定してください"}), 400
 
         try:
-            completed_at = datetime.fromisoformat(completed_at_str) if completed_at_str else datetime.now()
+            if completed_at_str:
+                normalized_completed_at = (
+                    completed_at_str[:-1] + "+00:00"
+                    if isinstance(completed_at_str, str) and completed_at_str.endswith("Z")
+                    else completed_at_str
+                )
+                completed_at = datetime.fromisoformat(normalized_completed_at)
+            else:
+                completed_at = datetime.now()
         except (TypeError, ValueError):
             return jsonify({"error": "completed_at の形式が不正です（ISO 8601）"}), 400
 

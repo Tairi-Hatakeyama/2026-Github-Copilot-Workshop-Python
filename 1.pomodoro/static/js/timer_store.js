@@ -14,6 +14,8 @@ class TimerStore {
       endAt: null,
       remainingSeconds: 25 * 60,
       totalSeconds: 25 * 60,
+      workSeconds: 25 * 60,
+      breakSeconds: 5 * 60,
       sessionCount: 0,
       startedAt: null,
     };

@@ -49,7 +49,7 @@ class TimerController {
 
   reset() {
     const { mode } = this._store.getState();
-    const totalSeconds = mode === 'work' ? 25 * 60 : 5 * 60;
+    const totalSeconds = this._getModeSeconds(mode);
     this._store.setState({
       status: 'idle',
       endAt: null,
@@ -113,7 +113,7 @@ class TimerController {
   _transitionToNext() {
     const { mode } = this._store.getState();
     const nextMode = mode === 'work' ? 'break' : 'work';
-    const totalSeconds = nextMode === 'work' ? 25 * 60 : 5 * 60;
+    const totalSeconds = this._getModeSeconds(nextMode);
     this._store.setState({
       mode: nextMode,
       status: 'idle',
@@ -122,5 +122,10 @@ class TimerController {
       totalSeconds,
     });
     this._store.persist();
+  }
+
+  _getModeSeconds(mode) {
+    const { workSeconds = 25 * 60, breakSeconds = 5 * 60 } = this._store.getState();
+    return mode === 'work' ? workSeconds : breakSeconds;
   }
 }

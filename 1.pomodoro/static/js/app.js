@@ -151,12 +151,17 @@ async function loadConfig(apiClient, store) {
   try {
     const cfg = await apiClient.getConfig();
     const workTotal = cfg.work_minutes * 60;
+    const breakTotal = cfg.break_minutes * 60;
     const { mode, status } = store.getState();
+    store.setState({
+      workSeconds: workTotal,
+      breakSeconds: breakTotal,
+    });
     // 実行中でなければ totalSeconds を設定値に合わせる
     if (status === 'idle') {
       store.setState({
-        totalSeconds: mode === 'work' ? workTotal : cfg.break_minutes * 60,
-        remainingSeconds: mode === 'work' ? workTotal : cfg.break_minutes * 60,
+        totalSeconds: mode === 'work' ? workTotal : breakTotal,
+        remainingSeconds: mode === 'work' ? workTotal : breakTotal,
       });
     }
   } catch (_) {}

@@ -64,4 +64,60 @@ describe('TimerController', () => {
     expect(state.status).toBe('paused');
     expect(state.endAt).toBeNull();
   });
+
+  it('reset は設定済みの作業時間/休憩時間を使う', () => {
+    const TimerController = loadControllerClass();
+    const state = {
+      mode: 'break',
+      status: 'paused',
+      totalSeconds: 180,
+      remainingSeconds: 90,
+      endAt: null,
+      workSeconds: 2100,
+      breakSeconds: 180,
+    };
+    const store = {
+      getState: () => ({ ...state }),
+      setState: (partial) => Object.assign(state, partial),
+      persist: () => {},
+      recordSession: () => {},
+    };
+    const api = { recordEvent: () => Promise.resolve({}) };
+    const notif = { notify: () => {}, playSound: () => {} };
+
+    const controller = new TimerController(store, api, notif);
+    controller.reset();
+
+    expect(state.status).toBe('idle');
+    expect(state.totalSeconds).toBe(180);
+    expect(state.remainingSeconds).toBe(180);
+  });
+
+  it('完了時の次モード遷移で設定秒数を使う', () => {
+    const TimerController = loadControllerClass();
+    const state = {
+      mode: 'work',
+      status: 'running',
+      totalSeconds: 2100,
+      remainingSeconds: 0,
+      endAt: new Date(Date.now() - 1000).toISOString(),
+      workSeconds: 2100,
+      breakSeconds: 420,
+    };
+    const store = {
+      getState: () => ({ ...state }),
+      setState: (partial) => Object.assign(state, partial),
+      persist: () => {},
+      recordSession: () => {},
+    };
+    const api = { recordEvent: () => Promise.resolve({}) };
+    const notif = { notify: () => {}, playSound: () => {} };
+
+    const controller = new TimerController(store, api, notif);
+    controller._transitionToNext();
+
+    expect(state.mode).toBe('break');
+    expect(state.totalSeconds).toBe(420);
+    expect(state.remainingSeconds).toBe(420);
+  });
 });

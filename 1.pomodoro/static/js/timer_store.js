@@ -51,7 +51,10 @@ class TimerStore {
       if (saved.status === 'running' && saved.endAt) {
         const remaining = Math.max(0, Math.floor((new Date(saved.endAt) - Date.now()) / 1000));
         saved.remainingSeconds = remaining;
-        if (remaining <= 0) saved.status = 'idle';
+        if (remaining <= 0) {
+          saved.status = 'idle';
+          saved.endAt = null;
+        }
       }
       this.state = { ...this.state, ...saved };
     } catch (_) { /* 破損データは無視 */ }

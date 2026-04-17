@@ -153,17 +153,18 @@ async function loadConfig(apiClient, store) {
     const workTotal = cfg.work_minutes * 60;
     const breakTotal = cfg.break_minutes * 60;
     const { mode, status } = store.getState();
-    store.setState({
+    const nextState = {
       workSeconds: workTotal,
       breakSeconds: breakTotal,
-    });
+    };
     // 実行中でなければ totalSeconds を設定値に合わせる
     if (status === 'idle') {
-      store.setState({
+      Object.assign(nextState, {
         totalSeconds: mode === 'work' ? workTotal : breakTotal,
         remainingSeconds: mode === 'work' ? workTotal : breakTotal,
       });
     }
+    store.setState(nextState);
   } catch (_) {}
 }
 

@@ -18,7 +18,7 @@ class NotificationService {
   notify(title, options = {}) {
     if (this._permission !== 'granted') return;
     try {
-      new Notification(title, { icon: '/static/icon.png', ...options });
+      new Notification(title, options);
     } catch (_) {}
   }
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <main class="app-container" role="main" aria-label="ポモドーロタイマー">
+
+    <!-- モード表示 -->
+    <div id="mode-display" class="mode-display" aria-live="polite">Work</div>
+
+    <!-- タイマー表示 -->
+    <div id="timer-display" class="timer-display" aria-live="polite" aria-atomic="true">25:00</div>
+
+    <!-- 進捗バー -->
+    <div class="progress-bar-container">
+      <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+    </div>
+
+    <!-- 操作ボタン -->
+    <div class="controls">
+      <button id="btn-start" type="button" aria-label="タイマーを開始または再開">開始</button>
+      <button id="btn-pause" type="button" aria-label="タイマーを一時停止" disabled>一時停止</button>
+      <button id="btn-reset" type="button" aria-label="タイマーをリセット" disabled>リセット</button>
+    </div>
+
+    <!-- 統計パネル -->
+    <section class="stats-panel" aria-label="本日の統計">
+      <h2>Today's Stats</h2>
+      <div class="stat-item">
+        <span>完了セッション:</span>
+        <span id="stat-sessions">0</span>
+      </div>
+      <div class="stat-item">
+        <span>集中時間:</span>
+        <span id="stat-focused-time">0 分</span>
+      </div>
+    </section>
+
+    <!-- 通知許可状態 -->
+    <div class="notification-status" role="status" aria-live="polite">
+      <span id="notification-status-text">通知: 未設定</span>
+      <button id="btn-notify-permission" type="button" aria-label="ブラウザ通知を許可">通知を許可する</button>
+    </div>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/timer_store.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/timer_controller.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/notification_service.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

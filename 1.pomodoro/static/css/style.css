@@ -1,0 +1,205 @@
+/* =====================
+   グローバルリセット・共通設定
+===================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: #fafafa;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px;
+}
+
+:focus-visible {
+  outline: 3px solid #1e88e5;
+  outline-offset: 2px;
+}
+
+/* =====================
+   レイアウト
+===================== */
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* =====================
+   モード表示
+===================== */
+.mode-display {
+  font-size: 1.25rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* =====================
+   タイマー表示
+===================== */
+.timer-display {
+  font-size: 5rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* =====================
+   進捗バー
+===================== */
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #e53935;
+  border-radius: 4px;
+  transition: width 0.5s linear;
+}
+
+/* =====================
+   操作ボタン
+===================== */
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.controls button {
+  min-width: 100px;
+  min-height: 44px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px 20px;
+  background: #e53935;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.controls button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+/* =====================
+   統計パネル
+===================== */
+.stats-panel {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.stats-panel h2 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 0.95rem;
+}
+
+/* =====================
+   通知許可状態
+===================== */
+.notification-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+
+#btn-notify-permission {
+  padding: 6px 14px;
+  border: 1px solid #757575;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* =====================
+   レスポンシブ: モバイル 480px 以下
+===================== */
+@media (max-width: 480px) {
+  body {
+    padding: 16px 12px;
+  }
+
+  .app-container {
+    gap: 18px;
+  }
+
+  .timer-display {
+    font-size: 4rem;
+  }
+
+  .controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls button {
+    width: 100%;
+  }
+}
+
+/* =====================
+   レスポンシブ: タブレット 768px〜
+===================== */
+@media (min-width: 768px) {
+  .app-container {
+    max-width: 720px;
+  }
+
+  .timer-display {
+    font-size: 7rem;
+  }
+}
+
+/* =====================
+   レスポンシブ: デスクトップ 1024px〜
+===================== */
+@media (min-width: 1024px) {
+  .app-container {
+    max-width: 960px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar,
+  .controls button {
+    transition: none;
+  }
+}
